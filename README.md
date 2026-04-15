@@ -1,36 +1,98 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Razwanul Chowdhury — Developer Portfolio
+
+A premium developer portfolio with integrated blog CMS. Built with Next.js 14 App Router, TypeScript, Tailwind CSS, and MDX.
+
+## Tech Stack
+
+- **Framework**: Next.js 14 (App Router, TypeScript)
+- **Styling**: Tailwind CSS with Instrument Serif + Geist fonts
+- **Animations**: Framer Motion (scroll-triggered entrance animations)
+- **Blog**: MDX with file-based content in `/content/blog/`
+- **Syntax highlighting**: rehype-highlight
+- **CMS**: Simple admin dashboard behind NextAuth.js credentials auth
+- **Analytics**: Vercel Analytics
 
 ## Getting Started
 
-First, run the development server:
-
 ```bash
+# Install dependencies
+npm install
+
+# Copy env file and fill in values
+cp .env.example .env.local
+
+# Run development server
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Environment Variables
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```env
+NEXTAUTH_SECRET=your-secret    # generate: openssl rand -base64 32
+NEXTAUTH_URL=http://localhost:3000
+ADMIN_EMAIL=admin@example.com
+ADMIN_PASSWORD=your-password
+```
 
-## Learn More
+## CMS Usage
 
-To learn more about Next.js, take a look at the following resources:
+1. Visit `/admin/login` and sign in with your `ADMIN_EMAIL` / `ADMIN_PASSWORD`
+2. Create, edit, and delete blog posts from the dashboard at `/admin`
+3. Posts are saved to `/content/blog/` as `.mdx` files
+4. **For production**: commit the MDX files to Git — they deploy with the site via Vercel
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+> **Note on Vercel**: File writes are ephemeral on Vercel's serverless functions. The CMS works perfectly in local development. For a fully managed production CMS, swap the file-based storage for Vercel Blob or Supabase.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Blog Post Format
 
-## Deploy on Vercel
+```mdx
+---
+title: "Your Post Title"
+date: "2025-08-15"
+excerpt: "A one-line summary shown in listings"
+tags: ["React", "TypeScript"]
+published: true
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Your markdown content here...
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Project Structure
+
+```
+portfolio/
+├── app/                    # Next.js App Router pages
+│   ├── page.tsx            # Homepage
+│   ├── blog/               # Blog listing + [slug] post pages
+│   ├── projects/           # Projects grid with filters
+│   ├── about/              # Career journey page
+│   ├── admin/              # CMS dashboard + editor
+│   └── api/                # NextAuth + posts CRUD API routes
+├── components/
+│   ├── layout/             # Header, Footer, MobileMenu
+│   ├── home/               # Hero, About, ProjectsShowcase, SkillsGrid, etc.
+│   ├── projects/           # ProjectCard, ProjectFilter
+│   ├── blog/               # BlogCard, BlogList, MDXContent, TableOfContents
+│   ├── admin/              # AdminGuard, PostList, PostEditor
+│   └── shared/             # Badge, Button, Section, AnimatedSection, GradientText
+├── content/blog/           # MDX blog posts (source of truth)
+├── lib/
+│   ├── posts.ts            # Read/write MDX files
+│   ├── mdx.ts              # rehype plugins + heading extraction
+│   ├── projects.ts         # Project + skills data
+│   └── auth.ts             # NextAuth config
+└── types/index.ts          # Shared TypeScript types
+```
+
+## Deployment
+
+1. Push to GitHub
+2. Connect to [Vercel](https://vercel.com)
+3. Add environment variables in Vercel project settings:
+   - `NEXTAUTH_SECRET` (generate: `openssl rand -base64 32`)
+   - `NEXTAUTH_URL` (your production URL)
+   - `ADMIN_EMAIL`
+   - `ADMIN_PASSWORD`
+4. Deploy — all blog posts in `/content/blog/` deploy with the site

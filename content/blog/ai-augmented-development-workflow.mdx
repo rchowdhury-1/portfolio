@@ -1,0 +1,45 @@
+---
+title: "My AI-Augmented Development Workflow: Building Faster with Claude Code"
+date: "2025-08-10"
+excerpt: "How I use Claude Code to accelerate learning during a career transition from finance — and what it genuinely can't replace."
+tags: ["AI", "Claude Code", "Developer Tools", "Productivity", "Career"]
+published: true
+---
+
+I spent 18 months in financial services at NatWest — and five years in customer-facing roles before that — analysing risk and building spreadsheet models that nobody ever called "elegant." When I decided to move into software development, the standard advice was: pick a tutorial, grind leetcode, apply for junior roles. I had a different hypothesis.
+
+What if I used AI to compress the build-understand cycle — ship real projects fast, then use those projects as the basis for deep learning?
+
+Six months and four portfolio projects later, here's what I've learned.
+
+## The Two-Day Method
+
+My workflow for every new technical concept or feature:
+
+**Day 1: Build with AI.** I use Claude Code to implement the feature as quickly as possible. The goal isn't to understand every line — it's to get a working implementation I can interact with. I describe what I want in natural language, let Claude generate the structure, and focus on getting it running.
+
+**Day 2: Deconstruct and learn.** I go back through the code line by line. For anything I don't understand, I ask Claude to explain it, then I look it up in the official docs. I delete sections and rewrite them from scratch. I ask "why did you choose this over X?" for every interesting decision.
+
+This approach gave me the Socket.IO event architecture for my collaborative task manager in about three hours on Day 1. Day 2 was spent understanding why rooms work the way they do, what happens during reconnection, and how the event loop handles concurrent connections. That understanding would have taken me weeks to build from a tutorial alone.
+
+## What AI Genuinely Accelerates
+
+**Database schema design.** I described the entities and relationships for my SaaS platform and Claude suggested a schema, explained the normalisation decisions, and flagged potential N+1 query problems before I'd written a single line of application code. I'd have gotten there eventually, but not before making several painful mistakes first.
+
+**Boilerplate elimination.** Authentication middleware, CORS configuration, error handling, TypeScript type definitions — this is code that every project needs and that follows standard patterns. AI handles it instantly, letting me focus on the parts that actually differentiate my project.
+
+**Error diagnosis.** Pasting a cryptic stack trace and getting a pinpointed explanation of the root cause (not just "try this") is genuinely transformative when you're still building your mental model of how systems fit together.
+
+## What AI Can't Replace
+
+**The intuition that comes from debugging.** When something breaks in a way that AI can't explain cleanly, you have to trace through the code yourself. Those debugging sessions are where real understanding is built. I've learned more from three-hour debugging sessions than from three days of Claude-assisted building.
+
+**Knowing what to build.** AI can tell you *how* to implement a feature once you know you need it. It can't tell you which features matter, which abstractions will make your codebase maintainable six months from now, or when you're over-engineering something simple.
+
+**Code review instincts.** Reading code critically — spotting security holes, performance problems, unnecessary complexity — this develops through exposure and practice, not through AI assistance.
+
+## The Honest Tradeoff
+
+Using AI to learn to code faster is real, but it comes with a risk: you can ship projects without deeply understanding what you shipped. The Two-Day Method is my counter to this. The build is fast; the understanding is slow and deliberate.
+
+I'm under no illusions that I'm as good as someone who's spent five years writing code the hard way. But I've shipped four real projects with real architecture in six months, and I can explain every line of them. That's the goal — not shortcuts, but compression of the timeline between "building it" and "understanding it."

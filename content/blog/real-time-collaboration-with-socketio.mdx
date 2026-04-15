@@ -1,0 +1,139 @@
+---
+title: "How I Built Real-Time Collaboration with Socket.IO Rooms"
+date: "2025-08-01"
+excerpt: "A deep dive into building live Kanban board collaboration — rooms, reconnection, cursor tracking, and optimistic updates."
+tags: ["Socket.IO", "WebSockets", "Real-Time", "React", "TypeScript"]
+published: true
+---
+
+Real-time collaboration sounds impressive until you actually try to build it. Then you realise there are about fifteen edge cases you didn't think about: what happens when a user disconnects mid-drag? What if two people rename the same card simultaneously? What does "live cursors" actually mean at 60fps?
+
+Here's how I approached building the collaborative Kanban board for my task manager project.
+
+## Why WebSockets Over Polling?
+
+Short polling (hammering the server every N seconds) works, but it's wasteful and has inherent latency. Long polling is better but still has a connection-per-request overhead. WebSockets give you a persistent, bidirectional connection — perfect for a board where you want changes to appear instantly.
+
+Socket.IO wraps WebSockets with useful extras: automatic reconnection, room-based broadcasting, and a fallback to long polling when WebSockets aren't available.
+
+## Socket.IO Rooms for Board-Scoped Broadcasting
+
+The key architectural decision was using **rooms** — one room per board. When a user opens a board, they join its room. Any event emitted to that room only reaches users on that board.
+
+```typescript
+// Server: user joins a board room
+socket.on('join-board', (boardId: string) => {
+  socket.join(`board:${boardId}`);
+  
+  // Broadcast to everyone else in the room that someone joined
+  socket.to(`board:${boardId}`).emit('user-joined', {
+    userId: socket.data.userId,
+    timestamp: Date.now(),
+  });
+});
+
+// Server: broadcast card moves to the room
+socket.on('card-moved', (data: CardMoveEvent) => {
+  // Emit to everyone in the room EXCEPT the sender
+  socket.to(`board:${data.boardId}`).emit('card-moved', data);
+  
+  // Persist to database
+  await updateCardPosition(data);
+});
+```
+
+## The useSocket Hook
+
+On the client, I built a `useSocket` hook that manages connection lifecycle and provides a clean interface for emitting events and subscribing to incoming ones:
+
+```typescript
+function useSocket(boardId: string) {
+  const socketRef = useRef<Socket | null>(null);
+  const [connected, setConnected] = useState(false);
+
+  useEffect(() => {
+    const socket = io(process.env.NEXT_PUBLIC_SOCKET_URL!, {
+      auth: { token: getAuthToken() },
+    });
+
+    socketRef.current = socket;
+
+    socket.on('connect', () => {
+      setConnected(true);
+      socket.emit('join-board', boardId);
+    });
+
+    socket.on('disconnect', (reason) => {
+      setConnected(false);
+      // Socket.IO auto-reconnects unless we explicitly disconnected
+      console.log('Disconnected:', reason);
+    });
+
+    return () => {
+      socket.emit('leave-board', boardId);
+      socket.disconnect();
+    };
+  }, [boardId]);
+
+  const emit = useCallback((event: string, data: unknown) => {
+    socketRef.current?.emit(event, data);
+  }, []);
+
+  return { socket: socketRef.current, connected, emit };
+}
+```
+
+## Cursor Tracking with Throttling
+
+Live cursors are cool but expensive if you broadcast every `mousemove` event (that's potentially 60 events per second per user). The fix is **throttling** — only emit cursor position updates every N milliseconds.
+
+```typescript
+// Throttle cursor updates to 50ms (20 updates/second max)
+const throttledCursorUpdate = useMemo(
+  () =>
+    throttle((x: number, y: number) => {
+      emit('cursor-move', { x, y, userId: currentUser.id, boardId });
+    }, 50),
+  [emit, boardId, currentUser.id]
+);
+
+useEffect(() => {
+  const handleMouseMove = (e: MouseEvent) => {
+    // Convert to percentage-based coords for different screen sizes
+    const x = (e.clientX / window.innerWidth) * 100;
+    const y = (e.clientY / window.innerHeight) * 100;
+    throttledCursorUpdate(x, y);
+  };
+
+  window.addEventListener('mousemove', handleMouseMove);
+  return () => window.removeEventListener('mousemove', handleMouseMove);
+}, [throttledCursorUpdate]);
+```
+
+## Optimistic Updates and Server Reconciliation
+
+For a smooth UX, I implemented **optimistic updates** — the UI reflects the change immediately, and we reconcile with the server response afterwards. If the server rejects the change (e.g. a conflict), we revert.
+
+```typescript
+const moveCard = async (cardId: string, newColumnId: string) => {
+  // Optimistic update — move the card in local state immediately
+  dispatch({ type: 'MOVE_CARD', payload: { cardId, newColumnId } });
+  
+  try {
+    // Emit to server and wait for confirmation
+    const confirmed = await emitWithAck('card-moved', { cardId, newColumnId, boardId });
+    if (!confirmed.success) {
+      // Server rejected — revert
+      dispatch({ type: 'REVERT_CARD', payload: { cardId } });
+    }
+  } catch {
+    dispatch({ type: 'REVERT_CARD', payload: { cardId } });
+  }
+};
+```
+
+## What I'd Do Differently
+
+The biggest issue with file-based state is conflict resolution — if two users move the same card simultaneously, last write wins. A proper implementation would use **CRDTs (Conflict-free Replicated Data Types)** or operational transformation. Libraries like Yjs or Automerge handle this elegantly.
+
+For the cursor rendering, I'd also use CSS transitions instead of React state updates for smoother animation — React's reconciliation adds unnecessary overhead for something purely visual.

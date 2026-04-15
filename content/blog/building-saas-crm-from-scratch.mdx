@@ -1,0 +1,101 @@
+---
+title: "Building a SaaS Platform from Scratch: JWT, Stripe, and Lessons Learned"
+date: "2025-07-15"
+excerpt: "What I learned building a full SaaS platform end-to-end — auth, billing, feature gating, and all the things that broke along the way."
+tags: ["React", "Node.js", "Stripe", "SaaS", "Authentication"]
+published: true
+---
+
+When I decided to learn full-stack development, I didn't want to build a todo app. I wanted something real — something that solved an actual problem and forced me to make architectural decisions. So I built a SaaS customer management platform from scratch.
+
+Here's what I learned.
+
+## The Architecture Decisions
+
+The first real decision was **JWT vs sessions**. I went with JWT for stateless authentication — it felt like the right call for a distributed system where I'd potentially want to scale out API servers independently. The tradeoff is you can't invalidate tokens server-side without extra infrastructure (a token blocklist), so I kept expiry short and implemented refresh tokens.
+
+For the database, I chose **SQLite for the prototype**. Everyone told me to use PostgreSQL, and they're right — but SQLite lets you move fast in development without spinning up a separate process. The schema was simple enough that migration later wouldn't be a nightmare.
+
+```javascript
+// Auth middleware — verifies JWT and attaches user to request
+const authenticateToken = (req, res, next) => {
+  const authHeader = req.headers['authorization'];
+  const token = authHeader && authHeader.split(' ')[1];
+
+  if (!token) return res.status(401).json({ error: 'Access denied' });
+
+  jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
+    if (err) return res.status(403).json({ error: 'Invalid token' });
+    req.user = user;
+    next();
+  });
+};
+```
+
+## The Stripe Integration
+
+This was the hardest part. Stripe's documentation is excellent, but there's a gap between "here's the API" and "here's how to build a production webhook handler that doesn't fail silently."
+
+The key insight: **always verify webhook signatures**. If you skip this, anyone can send fake events to your endpoint and trigger billing changes.
+
+```javascript
+// Stripe webhook handler — signature verification is non-negotiable
+app.post('/api/webhooks/stripe', express.raw({ type: 'application/json' }), (req, res) => {
+  const sig = req.headers['stripe-signature'];
+  let event;
+
+  try {
+    event = stripe.webhooks.constructEvent(req.body, sig, process.env.STRIPE_WEBHOOK_SECRET);
+  } catch (err) {
+    console.error('Webhook signature verification failed:', err.message);
+    return res.status(400).send(`Webhook Error: ${err.message}`);
+  }
+
+  switch (event.type) {
+    case 'customer.subscription.updated':
+      await handleSubscriptionUpdate(event.data.object);
+      break;
+    case 'invoice.payment_failed':
+      await handlePaymentFailed(event.data.object);
+      break;
+  }
+
+  res.json({ received: true });
+});
+```
+
+Note the `express.raw()` middleware — Stripe's signature verification requires the raw request body, not the parsed JSON. I burned two hours on this.
+
+## Plan-Based Feature Gating
+
+Once subscriptions were working, I needed to restrict features by plan. I built a higher-order component that wraps any feature and checks the user's plan:
+
+```jsx
+// Plan-gating HOC — wraps components with plan checks
+const withPlanGate = (Component, requiredPlan) => {
+  return function GatedComponent(props) {
+    const { user } = useAuth();
+    const plans = { starter: 1, pro: 2, enterprise: 3 };
+
+    if (plans[user?.plan] < plans[requiredPlan]) {
+      return (
+        <div className="upgrade-prompt">
+          <p>This feature requires the {requiredPlan} plan.</p>
+          <UpgradeButton />
+        </div>
+      );
+    }
+
+    return <Component {...props} />;
+  };
+};
+
+// Usage
+const AnalyticsDashboard = withPlanGate(Analytics, 'pro');
+```
+
+## What I'd Do Differently
+
+If I were starting this today, I'd use **Supabase** for auth and the database — it eliminates a huge amount of boilerplate and gives you a proper PostgreSQL instance from the start. I'd also store plan information in the database and sync it via Stripe webhooks rather than relying on the Stripe API directly for every request.
+
+The biggest lesson: **start with the payment flow, not the product**. It's the hardest part and the most likely to reveal architectural problems early.
