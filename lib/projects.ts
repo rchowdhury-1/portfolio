@@ -9,7 +9,7 @@ export const projects: Project[] = [
     longDescription:
       "Built a complete SaaS platform from scratch featuring user registration with JWT authentication, bcrypt password hashing, Stripe payment integration with webhook handling for subscription management, plan-based feature gating, and a responsive dashboard. Designed the database schema, REST API, and frontend component architecture end-to-end.",
     techStack: ["React", "Node.js", "Express", "SQLite", "JWT", "Stripe", "Tailwind CSS"],
-    liveUrl: "https://riz-website-v2.netlify.app",
+    liveUrl: "https://saas-landing-v2-ten.vercel.app",
     githubUrl: "https://github.com/rchowdhury-1/website-v2",
     featured: true,
     category: "fullstack",
@@ -51,7 +51,7 @@ export const projects: Project[] = [
     longDescription:
       "A collaborative task management app where multiple users work on shared Kanban boards in real-time. Features include drag-and-drop task cards with @dnd-kit, live cursor tracking showing where other users are working, instant task sync via Socket.IO rooms, an activity feed, board sharing via invite codes, JWT authentication, and optimistic UI updates with server reconciliation.",
     techStack: ["React", "TypeScript", "Socket.IO", "Node.js", "Express", "PostgreSQL", "Zustand", "Tailwind CSS"],
-    liveUrl: "#",
+    liveUrl: "https://task-manager-nine-lake-56.vercel.app",
     githubUrl: "https://github.com/rchowdhury-1/task-manager",
     featured: true,
     category: "realtime",
