@@ -1,6 +1,6 @@
 ---
 title: "My AI-Augmented Development Workflow: Building Faster with Claude Code"
-date: "2025-08-10"
+date: "2025-09-15"
 excerpt: "How I use Claude Code to accelerate learning during a career transition from finance — and what it genuinely can't replace."
 tags: ["AI", "Claude Code", "Developer Tools", "Productivity", "Career"]
 published: true
@@ -10,7 +10,7 @@ I spent 18 months in financial services at NatWest — and five years in custome
 
 What if I used AI to compress the build-understand cycle — ship real projects fast, then use those projects as the basis for deep learning?
 
-Six months and four portfolio projects later, here's what I've learned.
+Over the past few months and across several portfolio projects, here's what I've learned.
 
 ## The Two-Day Method
 
@@ -38,8 +38,13 @@ This approach gave me the Socket.IO event architecture for my collaborative task
 
 **Code review instincts.** Reading code critically — spotting security holes, performance problems, unnecessary complexity — this develops through exposure and practice, not through AI assistance.
 
+There was a moment building the Stripe webhook integration where Claude Code gave me code that looked right, compiled fine, and silently failed in production. The webhook was receiving events but never updating the database. I had to actually read the Stripe docs, understand the flow, and fix it myself. That was the moment I stopped treating Claude Code as an answer machine and started treating it as a fast typist.
+
+<!-- TODO: Add screenshot of Claude Code terminal running -->
+![Claude Code terminal running in development](/images/blog/claude-code-terminal.png)
+
 ## The Honest Tradeoff
 
 Using AI to learn to code faster is real, but it comes with a risk: you can ship projects without deeply understanding what you shipped. The Two-Day Method is my counter to this. The build is fast; the understanding is slow and deliberate.
 
-I'm under no illusions that I'm as good as someone who's spent five years writing code the hard way. But I've shipped four real projects with real architecture in six months, and I can explain every line of them. That's the goal — not shortcuts, but compression of the timeline between "building it" and "understanding it."
+I'm under no illusions that I'm as good as someone who's spent five years writing code the hard way. But I've shipped several real projects with real architecture over the past few months, and I can explain every line of them. That's the goal — not shortcuts, but compression of the timeline between "building it" and "understanding it."
