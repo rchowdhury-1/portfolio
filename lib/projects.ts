@@ -8,7 +8,7 @@ export const projects: Project[] = [
       "Full-stack SaaS application with subscription billing, JWT authentication, and role-based access control.",
     longDescription:
       "Built a complete SaaS platform from scratch featuring user registration with JWT authentication, bcrypt password hashing, Stripe payment integration with webhook handling for subscription management, plan-based feature gating, and a responsive dashboard. Designed the database schema, REST API, and frontend component architecture end-to-end.",
-    techStack: ["React", "Node.js", "Express", "SQLite", "JWT", "Stripe", "Tailwind CSS"],
+    techStack: ["React", "Node.js", "Express", "PostgreSQL", "Supabase", "JWT", "Stripe", "Tailwind CSS"],
     liveUrl: "https://saas-landing-v2-ten.vercel.app",
     githubUrl: "https://github.com/rchowdhury-1/website-v2",
     featured: true,
