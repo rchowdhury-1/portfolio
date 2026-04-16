@@ -64,7 +64,9 @@ app.post('/api/webhooks/stripe', express.raw({ type: 'application/json' }), (req
 });
 ```
 
-Note the `express.raw()` middleware — Stripe's signature verification requires the raw request body, not the parsed JSON. I burned two hours on this.
+Note the `express.raw()` middleware on that route — Stripe's signature verification requires the raw request body, not parsed JSON.
+
+The moment that nearly broke me was realising I had the Stripe webhook handler wrapped in `express.json()` middleware. Stripe sends a raw body for signature verification and `express.json()` was parsing it before my handler could see it. The error message was useless. I spent two hours convinced my secret key was wrong before I found a four-line Stack Overflow answer that fixed everything.
 
 ## Plan-Based Feature Gating
 
@@ -93,6 +95,9 @@ const withPlanGate = (Component, requiredPlan) => {
 // Usage
 const AnalyticsDashboard = withPlanGate(Analytics, 'pro');
 ```
+
+<!-- TODO: Add screenshot of the dashboard showing the subscription upgrade flow -->
+![Dashboard showing the subscription upgrade flow](/images/blog/saas-crm-upgrade-flow.png)
 
 ## What I'd Do Differently
 

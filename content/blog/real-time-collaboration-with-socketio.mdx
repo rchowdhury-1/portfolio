@@ -18,6 +18,8 @@ Socket.IO wraps WebSockets with useful extras: automatic reconnection, room-base
 
 ## Socket.IO Rooms for Board-Scoped Broadcasting
 
+I spent an embarrassing amount of time wondering why card moves were broadcasting to every user on the server, not just the people on the same board. I had completely missed the concept of rooms. Once I understood that `join-board` was the entry point and all broadcasts needed to be scoped to that room ID, everything clicked.
+
 The key architectural decision was using **rooms** — one room per board. When a user opens a board, they join its room. Any event emitted to that room only reaches users on that board.
 
 ```typescript
@@ -52,7 +54,7 @@ function useSocket(boardId: string) {
   const [connected, setConnected] = useState(false);
 
   useEffect(() => {
-    const socket = io(process.env.NEXT_PUBLIC_SOCKET_URL!, {
+    const socket = io(import.meta.env.VITE_SOCKET_URL!, {
       auth: { token: getAuthToken() },
     });
 
@@ -131,6 +133,9 @@ const moveCard = async (cardId: string, newColumnId: string) => {
   }
 };
 ```
+
+<!-- TODO: Add screenshot of the kanban board with multiple columns -->
+![Kanban board with multiple columns and live collaboration](/images/blog/task-manager-kanban.png)
 
 ## What I'd Do Differently
 
