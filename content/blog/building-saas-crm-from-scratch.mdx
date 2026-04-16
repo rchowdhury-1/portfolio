@@ -14,7 +14,6 @@ Here's what I learned.
 
 The first real decision was **JWT vs sessions**. I went with JWT for stateless authentication — it felt like the right call for a distributed system where I'd potentially want to scale out API servers independently. The tradeoff is you can't invalidate tokens server-side without extra infrastructure (a token blocklist), so I kept expiry short and implemented refresh tokens.
 
-For the database, I chose **SQLite for the prototype**. Everyone told me to use PostgreSQL, and they're right — but SQLite lets you move fast in development without spinning up a separate process. The schema was simple enough that migration later wouldn't be a nightmare.
 
 ```javascript
 // Auth middleware — verifies JWT and attaches user to request
@@ -101,6 +100,6 @@ const AnalyticsDashboard = withPlanGate(Analytics, 'pro');
 
 ## What I'd Do Differently
 
-If I were starting this today, I'd use **Supabase** for auth and the database — it eliminates a huge amount of boilerplate and gives you a proper PostgreSQL instance from the start. I'd also store plan information in the database and sync it via Stripe webhooks rather than relying on the Stripe API directly for every request.
-
 The biggest lesson: **start with the payment flow, not the product**. It's the hardest part and the most likely to reveal architectural problems early.
+
+That being said, going through the pain of building it the hard way first means I now understand exactly why those shortcuts exist. I can build a production SaaS with auth, subscription billing and feature gating from scratch — and I can do it quickly. Planning the architecture upfront and using AI tools to accelerate the boilerplate means what once took a week now takes two days. The understanding came first. The speed came after.
