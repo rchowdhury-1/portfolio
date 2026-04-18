@@ -18,6 +18,13 @@ export default function Footer() {
           <Link href="/projects" className="hover:text-amber-400 transition-colors">Projects</Link>
           <Link href="/blog" className="hover:text-amber-400 transition-colors">Blog</Link>
           <Link href="/about" className="hover:text-amber-400 transition-colors">About</Link>
+          <a
+            href="/resume.pdf"
+            download="Razwanul_Chowdhury_CV.pdf"
+            className="hover:text-amber-400 transition-colors"
+          >
+            Download CV
+          </a>
         </nav>
 
         <div className="flex items-center gap-4">

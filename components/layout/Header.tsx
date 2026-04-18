@@ -50,6 +50,7 @@ export default function Header() {
             ))}
             <a
               href="/resume.pdf"
+              download="Razwanul_Chowdhury_CV.pdf"
               className="ml-3 px-4 py-2 text-sm text-zinc-950 bg-amber-500 hover:bg-amber-400 rounded-lg font-medium transition-colors"
             >
               Download CV
