@@ -56,6 +56,7 @@ export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
             <div className="mt-auto pt-6 border-t border-zinc-800">
               <a
                 href="/resume.pdf"
+                download="Razwanul_Chowdhury_CV.pdf"
                 className="flex items-center gap-2 text-amber-400 hover:text-amber-300 transition-colors text-sm"
               >
                 Download CV
