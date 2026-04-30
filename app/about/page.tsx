@@ -57,9 +57,9 @@ export default function AboutPage() {
             </p>
             <p className="text-zinc-400 leading-relaxed mb-4">
               The approach that worked for me: build real projects first, then deconstruct them. I use
-              Claude Code to accelerate the initial build, then go back through every line until I can
-              explain why each decision was made. Four portfolio projects in six months — not toy apps,
-              but real applications with real architecture.
+              AI-assisted development tools to accelerate the initial build, then go back through every
+              line until I can explain why each decision was made. Five production applications live,
+              two freelance clients delivered — not toy apps, but real applications with real architecture.
             </p>
             <p className="text-zinc-400 leading-relaxed">
               I&apos;ve written about this in detail in the blog. The short version: AI doesn&apos;t

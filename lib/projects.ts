@@ -57,6 +57,20 @@ export const projects: Project[] = [
     category: "realtime",
     image: "/images/projects/task-manager.svg",
   },
+  {
+    id: "ooo-fat",
+    title: "Ooo..FAT! Restaurant Website",
+    description:
+      "Freelance client project — custom website for a Birmingham drive-thru smash burger restaurant with digital menu and QR ordering.",
+    longDescription:
+      "Designed and delivered a full production website for a Birmingham drive-thru restaurant. Features a mobile-first Apple-style visual scroll menu, a full pricing tab, and a QR code menu system so customers can scan and browse on their phones instantly. Includes branded domain setup, Google Maps integration, SEO metadata and sitemap. Delivered and approved within one week.",
+    techStack: ["Next.js", "TypeScript", "Tailwind CSS", "Vercel"],
+    liveUrl: "https://ooofat.com",
+    githubUrl: "https://github.com/rchowdhury-1/ooo-fat",
+    featured: true,
+    category: "freelance",
+    image: "/images/projects/ooo-fat.svg",
+  },
 ];
 
 export const skillCategories = [
@@ -66,22 +80,18 @@ export const skillCategories = [
   },
   {
     name: "Backend",
-    skills: ["Node.js", "Express", "REST APIs", "Socket.IO", "JWT Auth"],
+    skills: ["Node.js", "Express", "REST APIs", "Socket.IO", "JWT Auth", "bcrypt"],
   },
   {
     name: "Databases",
-    skills: ["PostgreSQL", "SQLite", "Supabase"],
+    skills: ["PostgreSQL", "SQLite", "Supabase", "Neon"],
   },
   {
-    name: "AI / ML",
-    skills: ["Groq AI", "OpenAI API", "LangChain (learning)"],
+    name: "Cloud & DevOps",
+    skills: ["AWS S3", "AWS EC2", "AWS RDS", "Vercel", "Render", "Git/GitHub"],
   },
   {
-    name: "Tools",
-    skills: ["Git", "GitHub", "Claude Code", "Vercel", "Render", "Vite", "npm"],
-  },
-  {
-    name: "Currently Learning",
-    skills: ["Next.js App Router", "TypeScript advanced patterns", "AI agent architecture"],
+    name: "AI & Payments",
+    skills: ["Groq AI", "LLM APIs", "Prompt Engineering", "Stripe API", "Webhooks"],
   },
 ];

@@ -11,6 +11,7 @@ const categories = [
   { value: "fullstack", label: "Full Stack" },
   { value: "ai", label: "AI" },
   { value: "realtime", label: "Real-Time" },
+  { value: "freelance", label: "Freelance" },
 ];
 
 export default function ProjectsClient({ projects }: { projects: Project[] }) {
@@ -27,8 +28,8 @@ export default function ProjectsClient({ projects }: { projects: Project[] }) {
           <p className="text-amber-500 text-sm font-mono tracking-widest mb-4 uppercase">Work</p>
           <h1 className="font-serif text-4xl sm:text-5xl text-zinc-100 mb-4">Projects</h1>
           <p className="text-zinc-400 text-lg max-w-2xl">
-            Four real applications built from scratch. Each one taught me something different
-            about software architecture, user experience, and shipping.
+            Five production applications live, including two freelance client projects. Each one
+            taught me something different about software architecture, user experience, and shipping.
           </p>
           <div className="mt-4 h-px w-16 bg-amber-500/60" />
         </div>

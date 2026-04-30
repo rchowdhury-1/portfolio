@@ -14,14 +14,14 @@ export default function About() {
           </h2>
           <div className="h-px w-12 bg-amber-500/60 mb-6" />
           <p className="text-zinc-400 leading-relaxed mb-4">
-            I spent five years in customer-facing roles and 18 months at NatWest in financial
-            services. I got good at it, but I kept coming back to the same thought: I&apos;d rather
+            I spent five years in customer-facing roles and 18 months at NatWest in commercial
+            banking. I got good at it, but I kept coming back to the same thought: I&apos;d rather
             build the tools.
           </p>
           <p className="text-zinc-400 leading-relaxed mb-8">
             Now I build full-stack web applications — React frontends, Node.js backends, real-time
-            features with WebSockets, and AI integrations. Four portfolio projects in six months,
-            all with real architecture, all of which I can explain line by line.
+            features with WebSockets, and AI integrations. Five production applications live, two
+            freelance clients delivered, all of which I can explain line by line.
           </p>
           <Link
             href="/about"
@@ -35,7 +35,7 @@ export default function About() {
         <AnimatedSection direction="right" delay={0.1}>
           <div className="grid grid-cols-2 gap-4">
             {[
-              { label: "Projects shipped", value: "4" },
+              { label: "Projects shipped", value: "5" },
               { label: "Years pre-dev career", value: "5+" },
               { label: "Technologies", value: "15+" },
               { label: "Lines of code written", value: "∞" },
