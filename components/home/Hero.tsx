@@ -77,7 +77,7 @@ export default function Hero() {
           </div>
 
           <p className="text-zinc-400 text-lg max-w-xl mx-auto mb-10 leading-relaxed">
-            Building polished web applications with React and Node.js. Former NatWest analyst, now
+            Building polished web applications with React and Node.js. Former NatWest Assistant Relationship Manager, now
             obsessed with shipping products that actually work.
           </p>
 

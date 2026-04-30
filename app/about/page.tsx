@@ -6,7 +6,7 @@ import AnimatedSection from "@/components/shared/AnimatedSection";
 export const metadata: Metadata = {
   title: "About",
   description:
-    "From NatWest financial analyst to full-stack developer — Razwanul Chowdhury's career transition story and what he builds now.",
+    "From NatWest Assistant Relationship Manager to full-stack developer — Razwanul Chowdhury's career transition story and what he builds now.",
 };
 
 export default function AboutPage() {
@@ -31,7 +31,7 @@ export default function AboutPage() {
             <p className="text-zinc-400 leading-relaxed mb-4">
               Before NatWest, I spent five years in customer-facing roles — building the communication
               and problem-solving instincts that finance alone doesn&apos;t teach. Then 18 months at
-              NatWest in risk analysis, building models in Excel and working across operations teams.
+              NatWest as an Assistant Relationship Manager in Commercial and Institutional Banking, building models in Excel and working across commercial client portfolios.
               I got competent at it. I also kept noticing a pattern: whenever there was a manual,
               repetitive process, I&apos;d try to automate it. Whenever there was a reporting gap,
               I&apos;d build a tool to fill it.

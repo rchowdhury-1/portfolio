@@ -31,7 +31,7 @@ export const metadata: Metadata = {
     template: "%s | Razwanul Chowdhury",
   },
   description:
-    "Full-stack developer specialising in React, Node.js, and AI-integrated applications. Former NatWest analyst building polished web products.",
+    "Full-stack developer specialising in React, Node.js, and AI-integrated applications. Former NatWest Assistant Relationship Manager building polished web products.",
   keywords: ["React", "Next.js", "TypeScript", "Full-Stack", "Developer", "UK"],
   authors: [{ name: "Razwanul Chowdhury" }],
   openGraph: {

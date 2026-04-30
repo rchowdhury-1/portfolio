@@ -7,7 +7,7 @@ export interface Project {
   liveUrl: string;
   githubUrl: string;
   featured: boolean;
-  category: "fullstack" | "ai" | "realtime";
+  category: "fullstack" | "ai" | "realtime" | "freelance";
   image: string;
 }
 

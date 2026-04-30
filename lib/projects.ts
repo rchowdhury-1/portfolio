@@ -61,15 +61,29 @@ export const projects: Project[] = [
     id: "ooo-fat",
     title: "Ooo..FAT! Restaurant Website",
     description:
-      "Freelance client project — custom website for a Birmingham drive-thru smash burger restaurant with digital menu and QR ordering.",
+      "Custom website for a Birmingham drive-thru smash burger restaurant — mobile-first digital menu, QR ordering system and branded domain. Delivered in one week.",
     longDescription:
-      "Designed and delivered a full production website for a Birmingham drive-thru restaurant. Features a mobile-first Apple-style visual scroll menu, a full pricing tab, and a QR code menu system so customers can scan and browse on their phones instantly. Includes branded domain setup, Google Maps integration, SEO metadata and sitemap. Delivered and approved within one week.",
+      "Designed and delivered a full production website for a Birmingham drive-thru restaurant. Features a mobile-first Apple-style visual scroll menu, a full pricing tab, and a QR code menu system so customers can scan and browse on their phones instantly. Includes branded domain setup, Google Maps integration, SEO metadata and sitemap. Delivered and approved within one week. Client feedback: \"Your work is soo good\"",
     techStack: ["Next.js", "TypeScript", "Tailwind CSS", "Vercel"],
-    liveUrl: "https://ooofat.com",
+    liveUrl: "https://www.ooofat.com",
     githubUrl: "https://github.com/rchowdhury-1/ooo-fat",
     featured: true,
     category: "freelance",
     image: "/images/projects/ooo-fat.svg",
+  },
+  {
+    id: "my-institute",
+    title: "My Institute — Education Platform",
+    description:
+      "Full-stack education platform for an Islamic studies institute — student portal, teacher tools, admin dashboard, scholarship system and recorded courses.",
+    longDescription:
+      "Full-stack education platform built for a real Islamic studies institute. Features a student portal with session management, teacher portal with homework and exam tools, supervisor panel, admin dashboard, scholarship application system, and a recorded courses section. Built with a Next.js frontend, Node.js/Express backend, and PostgreSQL database.",
+    techStack: ["Next.js", "TypeScript", "Node.js", "PostgreSQL", "Tailwind CSS"],
+    liveUrl: "",
+    githubUrl: "https://github.com/rchowdhury-1/my-institute",
+    featured: true,
+    category: "freelance",
+    image: "/images/projects/my-institute.svg",
   },
 ];
 

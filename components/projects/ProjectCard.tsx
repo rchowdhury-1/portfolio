@@ -12,12 +12,14 @@ const categoryColors = {
   fullstack: "text-blue-400 bg-blue-400/10 border-blue-400/20",
   ai: "text-purple-400 bg-purple-400/10 border-purple-400/20",
   realtime: "text-green-400 bg-green-400/10 border-green-400/20",
+  freelance: "text-amber-400 bg-amber-400/10 border-amber-400/20",
 };
 
 const categoryLabels = {
   fullstack: "Full Stack",
   ai: "AI",
   realtime: "Real-Time",
+  freelance: "Freelance",
 };
 
 export default function ProjectCard({ project }: ProjectCardProps) {
